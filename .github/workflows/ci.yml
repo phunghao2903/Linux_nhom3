@@ -28,12 +28,9 @@ jobs:
             shellcheck "$FILE"
           done
 
-      # Thực thi script với Bash (khi có lỗi, quá trình sẽ dừng lại)
+      # Thực thi script với Bash, set -e sẽ dừng nếu gặp lỗi
       - name: Execute script with Bash
         run: |
           set -e
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep '\.sh$' || true)
-          for FILE in $CHANGED_FILES; do
-            echo "Executing $FILE with Bash"
-            bash "$FILE"
-          done
+          chmod +x your_script.sh  # Đảm bảo script có quyền thực thi
+          bash your_script.sh
