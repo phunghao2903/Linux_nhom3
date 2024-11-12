@@ -23,7 +23,8 @@ jobs:
       - name: Check changed shell script files
         run: |
           # Lấy danh sách các file thay đổi trong Pull Request hoặc Push
-          PR_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          git fetch --prune --unshallow  # Đảm bảo có tất cả các commit trong PR
+          PR_FILES=$(git diff --name-only ${{ github.event.pull_request.before }} ${{ github.event.pull_request.after }})
 
           # Lọc các file có đuôi .sh
           SH_FILES=$(echo "$PR_FILES" | grep '\.sh$' || true)
@@ -42,7 +43,8 @@ jobs:
       - name: Execute changed shell scripts with Bash
         run: |
           # Lấy danh sách các file thay đổi
-          PR_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          git fetch --prune --unshallow  # Đảm bảo có tất cả các commit trong PR
+          PR_FILES=$(git diff --name-only ${{ github.event.pull_request.before }} ${{ github.event.pull_request.after }})
 
           # Lọc các file có đuôi .sh
           SH_FILES=$(echo "$PR_FILES" | grep '\.sh$' || true)
