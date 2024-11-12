@@ -1,0 +1,32 @@
+name: Shell Script CI
+
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Kiểm tra mã nguồn của repo
+      - name: Check out code
+        uses: actions/checkout@v2
+        
+      # Cài đặt shellcheck để kiểm tra lỗi shell script
+      - name: Set up shellcheck
+        run: sudo apt-get install -y shellcheck
+        
+      # Kiểm tra mã shell với shellcheck để phát hiện lỗi cú pháp
+      - name: Run ShellCheck
+        run: shellcheck your_script.sh
+        
+      # Chạy script với Bash
+      - name: Execute script with Bash
+        run: bash your_script.sh
+        
+      # Chạy script với Zsh bằng cách gọi zsh trực tiếp
+      - name: Execute script with Zsh
+        run: zsh your_script.sh
