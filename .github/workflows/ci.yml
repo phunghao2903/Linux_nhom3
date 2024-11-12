@@ -23,23 +23,23 @@ jobs:
       - name: Run ShellCheck on changed files
         run: |
           # Lấy danh sách các file thay đổi giữa commit hiện tại và commit trước đó
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep '\.sh$' || true)
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.before }} ${{ github.event.pull_request.after }} | grep '\.sh$' || true)
           
           # Chạy shellcheck cho mỗi file thay đổi
           for FILE in $CHANGED_FILES; do
             echo "Running shellcheck on $FILE"
-            shellcheck "$FILE"
+            shellcheck "$FILE" || exit 1  # Đảm bảo sẽ dừng khi có lỗi trong shellcheck
           done
 
       # Nếu có yêu cầu, có thể thêm bước để chạy script .sh sau khi kiểm tra
       - name: Execute changed shell scripts with Bash
         run: |
           # Lấy danh sách các file thay đổi
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep '\.sh$' || true)
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.before }} ${{ github.event.pull_request.after }} | grep '\.sh$' || true)
 
           # Thực thi các file .sh thay đổi
           for FILE in $CHANGED_FILES; do
             echo "Executing $FILE with Bash"
             chmod +x "$FILE"   # Đảm bảo file có quyền thực thi
-            bash "$FILE"       # Thực thi script với Bash
+            bash "$FILE" || exit 1   # Dừng nếu script có lỗi
           done
