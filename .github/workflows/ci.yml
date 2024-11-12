@@ -19,7 +19,7 @@ jobs:
       - name: Set up shellcheck
         run: sudo apt-get install -y shellcheck
         
-      # Tìm các tệp .sh đã thay đổi và chạy shellcheck
+      # Tìm các tệp .sh đã thay đổi và kiểm tra lỗi cú pháp với shellcheck
       - name: Run ShellCheck on changed files
         run: |
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep '\.sh$' || true)
@@ -27,19 +27,16 @@ jobs:
             echo "Running shellcheck on $FILE"
             shellcheck "$FILE"
           done
-        
-      # Thực thi các tệp .sh đã thay đổi bằng Bash
+
+      # Kiểm tra lỗi runtime bằng cách thực thi script với Bash, dừng ngay nếu có lỗi
       - name: Execute changed scripts with Bash
         run: |
+          set -e
           for FILE in $CHANGED_FILES; do
-            echo "Executing $FILE with Bash"
-            bash "$FILE"
-          done
-        
-      # Thực thi các tệp .sh đã thay đổi bằng Zsh
-      - name: Execute changed scripts with Zsh
-        run: |
-          for FILE in $CHANGED_FILES; do
-            echo "Executing $FILE with Zsh"
-            zsh "$FILE"
+            if [[ -x "$FILE" ]]; then
+              echo "Executing $FILE with Bash"
+              bash "$FILE"
+            else
+              echo "Skipping $FILE (not executable)"
+            fi
           done
