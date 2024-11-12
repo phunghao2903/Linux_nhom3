@@ -22,7 +22,7 @@ ram_usage() {
 }
 
 # Hàm hiển thị thông tin ổ đĩa
-disk_usage() {
+disk_usage() 
     echo "==== Disk Usage ===="
     df -h | grep '^/dev/' | awk '{ print $1 ": " $5 " used (" $4 " available)" }'
 }
