@@ -1,8 +1,10 @@
 name: Shell Script CI
 
-on:
+on: 
+  push:
+    branches: [main]
   pull_request:
-    branches: [main]  # Chạy khi có PR lên nhánh main
+    branches: [main]
 
 jobs:
   test:
