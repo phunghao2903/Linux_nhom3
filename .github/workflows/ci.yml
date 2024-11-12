@@ -1,6 +1,6 @@
 name: Shell Script CI
 
-on: 
+on:
   push:
     branches: [main]
   pull_request:
@@ -19,10 +19,10 @@ jobs:
       - name: Set up shellcheck
         run: sudo apt-get install -y shellcheck
 
-      # Lấy danh sách các file thay đổi trong PR và kiểm tra file .sh
+      # Lấy danh sách các file thay đổi trong Pull Request hoặc Push và kiểm tra file .sh
       - name: Check changed shell script files
         run: |
-          # Lấy danh sách các file thay đổi trong PR
+          # Lấy danh sách các file thay đổi trong Pull Request hoặc Push
           PR_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
 
           # Lọc các file có đuôi .sh
@@ -38,8 +38,22 @@ jobs:
             echo "No shell script files changed."
           fi
 
-      # Nếu có yêu cầu, có thể thêm bước để chạy script .sh sau khi kiểm tra
-      - name: Execute script with Bash
+      # Nếu có file .sh thay đổi, thực thi chúng với Bash
+      - name: Execute changed shell scripts with Bash
         run: |
-          chmod +x your_script.sh
-          bash your_script.sh
+          # Lấy danh sách các file thay đổi
+          PR_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+
+          # Lọc các file có đuôi .sh
+          SH_FILES=$(echo "$PR_FILES" | grep '\.sh$' || true)
+
+          # Nếu có file .sh thay đổi, thực thi chúng
+          if [ -n "$SH_FILES" ]; then
+            for file in $SH_FILES; do
+              echo "Executing $file with Bash"
+              chmod +x "$file"   # Đảm bảo file có quyền thực thi
+              bash "$file"       # Thực thi script với Bash
+            done
+          else
+            echo "No shell script files to execute."
+          fi
