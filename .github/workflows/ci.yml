@@ -1,36 +1,43 @@
 name: Shell Script CI
 
-on: 
-  push:
-    branches: [main]
+on:
   pull_request:
-    branches: [main]
+    branches: [main]  # Chạy khi có PR lên nhánh main
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
       # Kiểm tra mã nguồn của repo
       - name: Check out code
         uses: actions/checkout@v2
-        
+
       # Cài đặt shellcheck để kiểm tra lỗi shell script
       - name: Set up shellcheck
         run: sudo apt-get install -y shellcheck
-        
-      # Kiểm tra mã shell với shellcheck để phát hiện lỗi cú pháp
-      - name: Run ShellCheck on changed files
-        run: |
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep '\.sh$' || true)
-          for FILE in $CHANGED_FILES; do
-            echo "Running shellcheck on $FILE"
-            shellcheck "$FILE"
-          done
 
-      # Thực thi script với Bash, set -e sẽ dừng nếu gặp lỗi
+      # Lấy danh sách các file thay đổi trong PR và kiểm tra file .sh
+      - name: Check changed shell script files
+        run: |
+          # Lấy danh sách các file thay đổi trong PR
+          PR_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+
+          # Lọc các file có đuôi .sh
+          SH_FILES=$(echo "$PR_FILES" | grep '\.sh$' || true)
+
+          # Kiểm tra nếu có file .sh thay đổi và chạy shellcheck
+          if [ -n "$SH_FILES" ]; then
+            for file in $SH_FILES; do
+              echo "Running ShellCheck on $file"
+              shellcheck "$file"
+            done
+          else
+            echo "No shell script files changed."
+          fi
+
+      # Nếu có yêu cầu, có thể thêm bước để chạy script .sh sau khi kiểm tra
       - name: Execute script with Bash
         run: |
-          set -e
-          chmod +x your_script.sh  # Đảm bảo script có quyền thực thi
+          chmod +x your_script.sh
           bash your_script.sh
