@@ -2,7 +2,7 @@
 
 
 
-set -e
+#set -e
 # Hàm hiển thị thông tin CPU
 cpu_usage() {
     echo "==== CPU Usage ===="
