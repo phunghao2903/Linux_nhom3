@@ -2,7 +2,7 @@
 
 
 
-#set -e
+set -e
 # Hàm hiển thị thông tin CPU
 cpu_usage() {
     echo "==== CPU Usage ===="
@@ -28,7 +28,7 @@ disk_usage() {
 }
 
 # Gây lỗi bằng cách gọi một lệnh không hợp lệ
-#non_existent_command   # Lệnh không tồn tại
+non_existent_command   # Lệnh không tồn tại
 
 # Menu chính
 while true; do
