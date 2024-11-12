@@ -19,14 +19,27 @@ jobs:
       - name: Set up shellcheck
         run: sudo apt-get install -y shellcheck
         
-      # Kiểm tra mã shell với shellcheck để phát hiện lỗi cú pháp
-      - name: Run ShellCheck
-        run: shellcheck your_script.sh
+      # Tìm các tệp .sh đã thay đổi và chạy shellcheck
+      - name: Run ShellCheck on changed files
+        run: |
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep '\.sh$' || true)
+          for FILE in $CHANGED_FILES; do
+            echo "Running shellcheck on $FILE"
+            shellcheck "$FILE"
+          done
         
-      # Chạy script với Bash
-      - name: Execute script with Bash
-        run: bash your_script.sh
+      # Thực thi các tệp .sh đã thay đổi bằng Bash
+      - name: Execute changed scripts with Bash
+        run: |
+          for FILE in $CHANGED_FILES; do
+            echo "Executing $FILE with Bash"
+            bash "$FILE"
+          done
         
-      # Chạy script với Zsh bằng cách gọi zsh trực tiếp
-      - name: Execute script with Zsh
-        run: zsh your_script.sh
+      # Thực thi các tệp .sh đã thay đổi bằng Zsh
+      - name: Execute changed scripts with Zsh
+        run: |
+          for FILE in $CHANGED_FILES; do
+            echo "Executing $FILE with Zsh"
+            zsh "$FILE"
+          done
