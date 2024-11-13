@@ -10,7 +10,6 @@ on:
 
 jobs:
   shellcheck:
-    if: github.head_ref == 'synguyen'   # Chỉ chạy CI khi PR từ nhánh `synguyen`
     runs-on: ubuntu-latest              # Chạy trên máy chủ Ubuntu
 
     steps:
