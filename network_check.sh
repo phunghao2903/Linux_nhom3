@@ -49,7 +49,7 @@ while true; do
     echo "=================================="
     read -r -p "Chọn một tùy chọn [1-5]: " option
 
-   # case $option in làm sai code
+    case $option in
         1)
             ip_info
             ;;
