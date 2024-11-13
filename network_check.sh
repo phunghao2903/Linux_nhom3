@@ -7,9 +7,8 @@ fi
 
 HOST=$1
 
-if ping -c 4 $HOST > /dev/null;then
+if ping -c 4 "$HOST" > /dev/null 2>&1; then
     echo "Network check: $HOST is reachable."
 else
     echo "Network check: $HOST is not reachable."
 fi
-
