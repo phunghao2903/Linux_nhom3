@@ -12,7 +12,7 @@ while true; do
     echo "4) Kiểm tra mạng (network_check)"
     echo "5) Thoát"
     echo "=================================="
-    read -p "Chọn một tùy chọn [1-5]: " option
+    read -r -p "Chọn một tùy chọn [1-5]: " option
 
     case $option in
         1) 
