@@ -41,7 +41,7 @@ while true; do
     echo "3) Mức sử dụng ổ đĩa"
     echo "4) Quay lại"
     echo "=================================="
-    read -p "Chọn một tùy chọn [1-4]: " option
+    read -r -p "Chọn một tùy chọn [1-4]: " option
 
     case $option in
         1)
@@ -68,6 +68,6 @@ while true; do
 
     # Yêu cầu người dùng nhấn Enter để quay lại menu
     echo "Nhấn Enter để quay lại menu."
-    read -p ""
+    read -r -p ""
 done
 
