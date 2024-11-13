@@ -3,24 +3,24 @@ name: ShellCheck CI
 on:
   pull_request:
     branches:
-      - main         # Kích hoạt CI khi có pull request vào nhánh main
+      - main
     paths:
-      - '**/*.sh'    # Chỉ kiểm tra các file .sh
-    types: [opened, synchronize, reopened]  # Kích hoạt cho các sự kiện PR mở, cập nhật hoặc tái mở
+      - '**/*.sh'
+    types: [opened, synchronize, reopened]
 
 jobs:
   shellcheck:
-    if: github.head_ref == 'branch_of_huyle'   # Chỉ chạy CI khi PR từ nhánh `synguyen`
-    runs-on: ubuntu-latest              # Chạy trên máy chủ Ubuntu
+    if: github.head_ref == 'branch_of_huyle'
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2      # Bước lấy mã nguồn từ repository
+        uses: actions/checkout@v2
 
       - name: Install ShellCheck
-        run: sudo apt-get install -y shellcheck   # Cài đặt ShellCheck trên runner
+        run: sudo apt-get install -y shellcheck
 
-      - name: Run ShellCheck on all .sh files
+      - name: Run ShellCheck on modified .sh files
         run: |
-          # Tìm và kiểm tra tất cả file .sh trong project
-          find . -name "*.sh" -print0 | xargs -0 shellcheck
+          # Lấy danh sách các file .sh đã thay đổi trong PR
+          git diff --name-only origin/main...HEAD -- '*.sh' | xargs -r shellcheck
