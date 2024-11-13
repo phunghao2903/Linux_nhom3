@@ -12,24 +12,40 @@ while true; do
     echo "4) Kiểm tra mạng (network_check)"
     echo "5) Thoát"
     echo "=================================="
-    read -p "Chọn một tùy chọn [1-5]: " option
+    read -r -p "Chọn một tùy chọn [1-5]: " option
 
     case $option in
-        1) 
+        1)
             # Gọi script quản lý người dùng
-            ./user_manager.sh
+            if [[ -f ./user_manager.sh ]]; then
+                ./user_manager.sh
+            else
+                echo "Script user_manager.sh không tồn tại!"
+            fi
             ;;
         2)
             # Gọi script giám sát hệ thống
-            ./sys_monitor.sh
+            if [[ -f ./sys_monitor.sh ]]; then
+                ./sys_monitor.sh
+            else
+                echo "Script sys_monitor.sh không tồn tại!"
+            fi
             ;;
         3)
             # Gọi script sao lưu
-            ./backup.sh
+            if [[ -f ./backup.sh ]]; then
+                ./backup.sh
+            else
+                echo "Script backup.sh không tồn tại!"
+            fi
             ;;
         4)
             # Gọi script kiểm tra mạng
-            ./network_check.sh
+            if [[ -f ./network_check.sh ]]; then
+                ./network_check.sh
+            else
+                echo "Script network_check.sh không tồn tại!"
+            fi
             ;;
         5)
             # Thoát chương trình
@@ -43,3 +59,4 @@ while true; do
             ;;
     esac
 done
+
