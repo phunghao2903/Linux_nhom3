@@ -21,9 +21,8 @@ if [ ! -d "$DESTINATION" ]; then
 fi
 
 tar -czf "$DESTINATION/$BACKUP_NAME" "$SOURCE"
-if [ $? -eq 0 ]; then
+if tar -czf "$DESTINATION/$BACKUP_NAME" "$SOURCE"; then
     echo "Backup of $SOURCE completed at $DESTINATION/$BACKUP_NAME"
 else
-    echo "Error: Backup failed."
-    exit 1
+    echo "Backup failed"
 fi
