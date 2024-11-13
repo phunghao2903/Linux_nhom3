@@ -24,4 +24,3 @@ jobs:
         run: |
           # Tìm và kiểm tra tất cả file .sh trong project
           find . -name "*.sh" -print0 | xargs -0 shellcheck
-
