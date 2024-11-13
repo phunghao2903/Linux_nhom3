@@ -33,7 +33,7 @@ disk_usage() {
 # Menu chính
 while true; do
     clear
-    echo "=================================="
+    echo "================================== "
     echo "Quản lý Hệ thống"
     echo "=================================="
     echo "1) Mức sử dụng CPU"
