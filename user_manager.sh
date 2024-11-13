@@ -14,7 +14,7 @@ while true; do
     echo "=================================="
     read -p "Chọn một tùy chọn [1-5]: " option
 
-    case $options in
+    case $option in
         1)
             # Thêm người dùng
             while true; do
