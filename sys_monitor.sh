@@ -1,13 +1,12 @@
 #!/bin/bash
 
-
-
 set -e
-# Hàm hiển thị thông tin CPU
 cpu_usage() {
     echo "==== CPU Usage ===="
     top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print "CPU Load: " 100 - $1"%"}'
+    echo "This is a change in the synguyen branch"  # Thêm dòng này
 }
+
 
 # Hàm hiển thị thông tin RAM
 ram_usage() {
