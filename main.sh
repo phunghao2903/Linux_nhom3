@@ -14,37 +14,21 @@ while true; do
     read -r -p "Chọn một tùy chọn [1-5]: " option
 
     case $option in
-        1)
+        1) 
             # Gọi script quản lý người dùng
-            if [[ -f ./user_manager.sh ]]; then
-                ./user_manager.sh
-            else
-                echo "Script user_manager.sh không tồn tại!"
-            fi
+            ./user_manager.sh
             ;;
         2)
             # Gọi script giám sát hệ thống
-            if [[ -f ./sys_monitor.sh ]]; then
-                ./sys_monitor.sh
-            else
-                echo "Script sys_monitor.sh không tồn tại!"
-            fi
+            ./sys_monitor.sh
             ;;
         3)
             # Gọi script sao lưu
-            if [[ -f ./backup.sh ]]; then
-                ./backup.sh
-            else
-                echo "Script backup.sh không tồn tại!"
-            fi
+            ./backup.sh
             ;;
         4)
             # Gọi script kiểm tra mạng
-            if [[ -f ./network_check.sh ]]; then
-                ./network_check.sh
-            else
-                echo "Script network_check.sh không tồn tại!"
-            fi
+            ./network_check.sh
             ;;
         5)
             # Thoát chương trình
@@ -58,4 +42,3 @@ while true; do
             ;;
     esac
 done
-
