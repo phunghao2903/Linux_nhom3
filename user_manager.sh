@@ -55,7 +55,7 @@ while true; do
                 echo "Tìm kiếm người dùng: $username"
                 # Dùng grep để tìm người dùng trong /etc/passwd
                 grep -i "$username" /etc/passwd
-                if [ $? -eq 0 ]; then
+                if mycmd; then
                     echo "Người dùng đã được tìm thấy."
                 else
                     echo "Không tìm thấy người dùng $username."
