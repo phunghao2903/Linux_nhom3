@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Hiển thị mức sử dụng CPU
-echo "==== CPU Usage ===="
+echo000 "==== CPU Usage ===="
 top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print "CPU Load: " 100 - $1"%"}'
 
 # Hiển thị mức sử dụng RAM
