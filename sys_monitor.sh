@@ -38,13 +38,7 @@ while true; do
     echo "=================================="
     echo "1) Mức sử dụng CPU"
     echo "2) Mức sử dụng RAM"
-    echo "3) Mức sử dụng ổ đĩa"
-    echo "4) Quay lại"
-    echo "=================================="
-    read -p "Chọn một tùy chọn [1-4]: " option
 
-    case $option in
-        1)
             # Hiển thị mức sử dụng CPU
             cpu_usage
             ;;
