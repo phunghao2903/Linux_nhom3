@@ -9,8 +9,7 @@ fi
 HOST=$1
 
 # Ping kiểm tra kết nối
-ping -c 4 $HOST > /dev/null
-if [ $? -eq 0 ]; then
+if ping -c 4 $HOST > /dev/null;then
     echo "Network check: $HOST is reachable."
 else
     echo "Network check: $HOST is not reachable."
