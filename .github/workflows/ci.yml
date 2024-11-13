@@ -23,16 +23,16 @@ jobs:
       - name: Run ShellCheck on changed files
         run: |
           set -e  # Dừng nếu có lỗi
-          
+
           # Lấy danh sách các file thay đổi trong Pull Request (PR) hoặc Push lên main
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.before }} ${{ github.event.pull_request.after }} | grep '\.sh$' || true)
-          
+          CHANGED_FILES=$(git diff --name-only origin/main HEAD | grep '\.sh$' || true)
+
           # Nếu không có file .sh nào thay đổi, bỏ qua bước này
           if [ -z "$CHANGED_FILES" ]; then
             echo "No shell script files changed."
             exit 0
           fi
-          
+
           # Chạy shellcheck cho mỗi file thay đổi
           for FILE in $CHANGED_FILES; do
             echo "Running shellcheck on $FILE"
@@ -45,7 +45,7 @@ jobs:
           set -e  # Dừng nếu có lỗi
 
           # Lấy danh sách các file thay đổi
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.before }} ${{ github.event.pull_request.after }} | grep '\.sh$' || true)
+          CHANGED_FILES=$(git diff --name-only origin/main HEAD | grep '\.sh$' || true)
 
           # Nếu không có file .sh nào thay đổi, bỏ qua bước này
           if [ -z "$CHANGED_FILES" ]; then
