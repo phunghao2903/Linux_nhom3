@@ -3,35 +3,35 @@ name: ShellCheck CI
 on:
   pull_request:
     branches:
-      - main        # Kích hoạt CI khi có pull request vào nhánh main
+      - main
     paths:
-      - '**/*.sh'   # Chỉ kiểm tra các file .sh
-    types: [opened, synchronize, reopened]  # Kích hoạt cho các sự kiện PR mở, cập nhật hoặc tái mở
+      - '**/*.sh'
+    types: [opened, synchronize, reopened]
 
 jobs:
   shellcheck:
-    runs-on: ubuntu-latest              # Chạy trên máy chủ Ubuntu
+    if: github.head_ref == 'branch_of_huyle'
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2      # Bước lấy mã nguồn từ repository
+        uses: actions/checkout@v2
+
+      - name: Setup Paths Filter
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            shell_scripts:
+              - '*.sh'
 
       - name: Install ShellCheck
-        run: sudo apt-get install -y shellcheck   # Cài đặt ShellCheck trên runner
+        if: steps.filter.outputs.shell_scripts == 'true'
+        run: sudo apt-get install -y shellcheck
 
-      - name: Find and run ShellCheck on modified .sh files
+      - name: Run ShellCheck on modified .sh files
+        if: steps.filter.outputs.shell_scripts == 'true'
         run: |
-          # Lấy các file .sh thay đổi so với nhánh main
-          CHANGED_FILES=$(git diff --name-only origin/main | grep '\.sh$' || true)
-          
-          # Kiểm tra xem có file .sh nào thay đổi không
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "No shell script files changed."
-            exit 0
-          fi
-
-          # Chạy shellcheck cho từng file thay đổi
-          for FILE in $CHANGED_FILES; do
-            echo "Running shellcheck on $FILE"
-            shellcheck "$FILE" || exit 1  # Nếu phát hiện lỗi, dừng workflow và báo lỗi
+          for file in $(echo "${{ steps.filter.outputs.shell_scripts_files }}" | tr ',' '\n'); do
+            shellcheck "$file"
           done
