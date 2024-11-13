@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-HOST=$1
+HOST="$1" 
 
 if ping -c 4 "$HOST" > /dev/null 2>&1; then
     echo "Network check: $HOST is reachable."
