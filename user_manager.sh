@@ -87,4 +87,5 @@ while true; do
     # Yêu cầu người dùng nhấn Enter để quay lại menu
     echo "Nhấn Enter để quay lại menu."
     read -r
+done
 
