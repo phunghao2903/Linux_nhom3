@@ -12,13 +12,13 @@ while true; do
     echo "4) Tìm người dùng (search)"
     echo "5) Quay lại"
     echo "=================================="
-    read -p "Chọn một tùy chọn [1-5]: " option
+    read -r -p "Chọn một tùy chọn [1-5]: " option
 
     case $option in
         1)
             # Thêm người dùng
             while true; do
-                read -p "Nhập tên người dùng muốn thêm: " username
+                read -r -p "Nhập tên người dùng muốn thêm: " username
                 if [ -z "$username" ]; then
                     echo "Tên người dùng không được để trống. Vui lòng thử lại."
                 else
@@ -31,7 +31,7 @@ while true; do
         2)
             # Xóa người dùng
             while true; do
-                read -p "Nhập tên người dùng muốn xóa: " username
+                read -r -p "Nhập tên người dùng muốn xóa: " username
                 if [ -z "$username" ]; then
                     echo "Tên người dùng không được để trống. Vui lòng thử lại."
                 else
@@ -48,7 +48,7 @@ while true; do
             ;;
         4)
             # Tìm người dùng
-            read -p "Nhập tên người dùng cần tìm: " username
+            read -r -p "Nhập tên người dùng cần tìm: " username
             if [ -z "$username" ]; then
                 echo "Vui lòng nhập tên người dùng để tìm."
             else
@@ -74,6 +74,6 @@ while true; do
 
     # Yêu cầu người dùng nhấn Enter để quay lại menu
     echo "Nhấn Enter để quay lại menu."
-    read -p ""
+    read -r
 done
 
