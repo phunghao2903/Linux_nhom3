@@ -15,11 +15,6 @@ if [ ! -d "$SOURCE" ]; then
     exit 1
 fi
 
-if [ ! -d "$DESTINATION" ]; then
-    echo "Error: Destination directory $DESTINATION does not exist."
-    exit 1
-fi
-
 tar -czf "$DESTINATION/$BACKUP_NAME" "$SOURCE"
 if tar -czf "$DESTINATION/$BACKUP_NAME" "$SOURCE"; then
     echo "Backup of $SOURCE completed at $DESTINATION/$BACKUP_NAME"
