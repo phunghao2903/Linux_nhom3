@@ -19,7 +19,7 @@ network_status() {
 }
 
 # Hàm kiểm tra các cổng đang mở
-open_ports() {
+open_ports() 
     echo "==== Open Ports ===="
     sudo netstat -tuln | grep LISTEN
 }
