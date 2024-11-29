@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Menu chính
 while true; do
     clear
     echo "=================================="
